@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Start Download') {
+            steps { build job: "download" }
+        }
+        stage ('Train') {
+            steps {
+                script {
+                    dir('/var/lib/jenkins/workspace/download') { build job: "train" }
+                }
+            }
+        }
+        stage ('Deploy') {
+            steps { build job: 'deploy' }
+        }
+        stage ('Status') {
+            steps { build job: 'healthy' }
+        }
+    }
+}
