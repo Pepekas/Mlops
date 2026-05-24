@@ -1,0 +1,14 @@
+data:
+  dataset_path: data/mental_health.csv
+  prepared_dataset_path: data/prepared_dataset.csv
+  train_path: data/train.csv
+  test_path: data/test.csv
+
+train:
+  test_size: 0.2
+  random_state: 42
+  target_column: stress_level
+  iterations: 100
+  depth: 6
+  learning_rate: 0.1
+  loss_function: MultiClass

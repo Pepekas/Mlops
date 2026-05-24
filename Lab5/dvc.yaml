@@ -1,0 +1,36 @@
+stages:
+  prepare_dataset:
+    cmd: env PYTHONPATH=. python src/stages/prepare_dataset.py
+    deps:
+      - data/mental_health.csv
+      - src/stages/prepare_dataset.py
+    outs:
+      - data/prepared_dataset.csv
+
+  data_splite:
+    cmd: env PYTHONPATH=. python src/stages/data_splite.py
+    deps:
+      - data/prepared_dataset.csv
+      - src/stages/data_splite.py
+    outs:
+      - data/train.csv
+      - data/test.csv
+
+  train:
+    cmd: env PYTHONPATH=. python src/stages/train.py
+    deps:
+      - data/train.csv
+      - data/test.csv
+      - src/stages/train.py
+      - src/model_scripts/train.py
+      - src/config.yaml
+    params:
+      - src/config.yaml:
+        - train.iterations
+        - train.depth
+        - train.learning_rate
+    outs:
+      - models/model.pkl
+    metrics:
+      - metrics.json:
+          cache: false
