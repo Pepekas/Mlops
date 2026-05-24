@@ -1,11 +1,11 @@
-from catboost import CatBoostClassifier
+from catboost import CatBoostRegressor
 import yaml
 
 def get_model():
     with open('src/config.yaml', 'r', encoding='utf-8') as file:
         config = yaml.safe_load(file)
 
-    model = CatBoostClassifier(
+    model = CatBoostRegressor(
         iterations=config['train']['iterations'],
         depth=config['train']['depth'],
         learning_rate=config['train']['learning_rate'],

@@ -4,11 +4,12 @@ import joblib
 import json
 import sys
 from pathlib import Path
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 sys.path.append(str(Path(__file__).resolve().parents[2]))
 from src.model_scripts.train import get_model
 from src.loggers import get_logger
+
 
 def train_model():
     with open('src/config.yaml', 'r', encoding='utf-8') as file:
@@ -32,13 +33,18 @@ def train_model():
     joblib.dump(model, 'models/model.pkl')
 
     preds = model.predict(X_test)
+
+    rmse_val = mean_squared_error(y_test, preds) ** 0.5
+    mae_val = mean_absolute_error(y_test, preds)
+
     metrics = {
-        'accuracy': accuracy_score(y_test, preds),
-        'f1_score_weighted': f1_score(y_test, preds, average='weighted')
+        'rmse': float(rmse_val),
+        'mae': float(mae_val)
     }
 
     with open('metrics.json', 'w') as f:
         json.dump(metrics, f, indent=4)
+
 
 if __name__ == '__main__':
     train_model()

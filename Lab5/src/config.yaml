@@ -11,4 +11,4 @@ train:
   iterations: 100
   depth: 6
   learning_rate: 0.1
-  loss_function: MultiClass
+  loss_function: RMSE
