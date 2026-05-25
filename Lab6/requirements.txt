@@ -1,0 +1,10 @@
+scikit-learn
+fastapi
+pydantic
+uvicorn
+pandas
+pytest
+httpx
+sqlalchemy
+psycopg2-binary
+catboost
